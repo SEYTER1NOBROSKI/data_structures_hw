@@ -7,6 +7,12 @@ struct List {
 	int data;
 };
 
+// void func(int *a) {
+// 	int b = 5;
+// 	const int *const ptr = &b;
+// 	ptr++;
+// }
+
 void add_item(struct List **item, int value) {
 	struct List *new_node = (struct List *)malloc(sizeof(struct List));
 	new_node->data = value;
