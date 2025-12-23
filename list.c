@@ -15,18 +15,20 @@ struct List {
 
 void add_item(struct List **item, int value) {
 	struct List *new_node = (struct List *)malloc(sizeof(struct List));
+	//new_node = *item;
 	new_node->data = value;
-	new_node->next = NULL;
-
-	if (*item == NULL) {
-		*item = new_node;
-	} else {
-		struct List *current = *item;
-		while (current->next != NULL) {
-			current = current->next;
-		}
-		current->next = new_node;
-	}
+	new_node->next = *item;
+	*item = new_node;
+	// if (*item == NULL) {
+	// 	*item = new_node;
+	// } else {
+	// 	struct List *current = *item;
+	// 	if (current->next != NULL) {
+	// 		//current = current->next;
+	// 		current = *item;
+	// 	}
+	// 	current->next = new_node;
+	// }
 	printf("Added number: %d\n", value);
 }
 
