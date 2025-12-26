@@ -41,6 +41,42 @@ void add_node(struct Tree **root, int value) {
 	}
 }
 
+struct Tree* del_node(struct Tree *root, int x) {
+	
+	if (root == NULL) {
+		return root;
+	}
+
+	if (root->data > x) {
+		root->left = del_node(root->left, x);
+	} else if (root->data < x) {
+		root->right = del_node(root->right, x);
+	} else {
+		//if node with 0 or 1 child
+		if (root->left == NULL) {
+			struct Tree *temp = root->right;
+			free(root);
+			return temp;
+		}
+		if (root->right == NULL) {
+			struct Tree *temp = root->left;
+			free(root);
+			return temp;
+		}
+
+		//node with 2 children
+		struct Tree *successor = root;
+		successor = successor->right;
+		while (successor->left != NULL) {
+			successor = successor->left;
+		}
+
+		root->data = successor->data;
+		root->right = del_node(root->right, successor->data);
+	}
+	return root;
+}
+
 void print_tree(struct Tree *root) {
 	if (root != NULL)
 	{
@@ -66,6 +102,12 @@ int main()
 			scanf("%d", &number);
 			add_node(&root, number);
 			printf("Tree after adding: ");
+			print_tree(root);
+			printf("\n");
+		} else if (strcmp(buffer, "del") == 0) {
+			scanf("%d", &number);
+			del_node(root, number);
+			printf("Tree after deleting: ");
 			print_tree(root);
 			printf("\n");
 		} else if (strcmp(buffer, "print") == 0) {
