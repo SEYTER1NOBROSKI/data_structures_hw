@@ -67,6 +67,22 @@ void get_by_index_item(struct List **item, int index) {
 	printf("Index %d out of bounds\n", index);
 }
 
+int has_cycle(struct List *item) {
+	struct List *fast = item;
+	struct List *slow = item;
+
+	while (fast != NULL && fast->next != NULL) {
+		slow = slow->next;
+		fast = fast->next->next;
+
+		if (slow == fast) {
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
 int main()
 {
 	struct List *item = NULL;
@@ -78,6 +94,7 @@ int main()
 	printf("add: to add number to list\n");
 	printf("get: to get number from list using index\n");
 	printf("del: to delete number from list\n");
+	printf("cycle: to check if list has cycle\n");
 
 	while (1) {
 		scanf("%s", buffer);
@@ -106,6 +123,12 @@ int main()
 				temp = temp->next;
 			}
 			printf("NULL\n");
+		} else if (strcmp(buffer, "cycle") == 0) {
+			if (has_cycle(item) == 1) {
+				printf("List has cycle!\n");
+			} else {
+				printf("List don't have cycle!\n");
+			}
 		} else if (strcmp(buffer, "exit") == 0) {
 			break;
 		}
